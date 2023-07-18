@@ -1,0 +1,20 @@
+\newcommand{\myfig}[5]{
+%% example:
+% \myfig{}%% filename in figures folder
+%       {width=0.5\textwidth,height=0.5\textheight}%% maximum width/height, aspect ratio will be kept
+%       {}%% caption
+%       {}%% optional (short) caption for list of figures
+%       {}%% label
+\begin{figure}%[htp]
+  \centering
+  \includegraphics[keepaspectratio,#2]{figures/#1}
+  \caption[#4]{#3}
+  \label{#5} %% NOTE: always label *after* caption!
+\end{figure}
+}
+
+\newcounter{myclonecnt}
+\newcommand{\myclone}[2][2]{%
+  \setcounter{myclonecnt}{#1}%
+  \whiledo{\value{myclonecnt}>0}{#2\addtocounter{myclonecnt}{-1}}%
+}

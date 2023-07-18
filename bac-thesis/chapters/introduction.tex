@@ -1,0 +1,27 @@
+
+\chapter{Introduction}
+\label{cha:introduction}
+
+There are many approaches to finding optimal policies for controlling a dynamic system. However, all concepts of finding such a policy can be attributed to the 2 elementary classes: Model-Free and Model-Based algorithms. These dynamic systems describe an environment and a time-dependent objective function that we seek to control. Model-based algorithms need a complete understanding of the dynamic system, while model-free algorithms approximate the system's properties by learning a control policy.
+
+This paper introduces the underlying theory of both approaches and shows respective methods and how they work.
+We analyze and compare dynamic programming to reinforcement learning on time-discrete dynamic systems. We view time as not continuous but jumping in discrete time steps in such a system.
+
+Both methods are active fields of study, and contributions steadily augment the fundamental approach behind them.
+
+We aim to demonstrate and analyze both methods in practice. Therefore we use the \emph{Parking Problem} from \cite{bertsekas2019reinforcement} and apply both algorithms to this problem to show and compare the results. 
+
+\section{History}
+We will now present relevant parts of how discussed algorithms have developed throughout history. The history of these topics is quite extensive, and interested readers may want to look up Sutton and Barto \cite{sutton2018reinforcement} for a more detailed history.
+
+Bellman and Richard coined the term Markov Decision Process \cite{bellman1957markovian} in 1957 and later worked on what we now know as dynamic programming \cite{bellman1966dynamic}. The deterministic Bellman Equation \ref{eqn:bellman} and the stochastic variant have been introduced and were used as a foundation for many upcoming enhancements in the following years. Another significant improvement on how to overcome high dimensional problems has been conceived as approximate dynamic programming by many different papers like \cite{si2004handbook}, \cite{powell2007approximate}, and \cite{bertsekas2008approximate}.
+
+Q-learning \cite{watkins1989learning} was introduced in 1989 by Watkins et al., and proof for its convergence was given in 1992 \cite{watkins1992q}. The basics of these works have been improved as Deep Q-learning by Gu, Shixiang, et al. \cite{gu2016continuous} by using a deep convolutional neural network.
+
+The understanding of dynamic programming and reinforcement learning has been deepened, and the relations between approaches have been compared. Busoniu, Lucian, et al. \cite{busoniu2017reinforcement} compared and analyzed different algorithms as function approximators. Bertsekas \cite{bertsekas2019reinforcement} shows an extensive comparison of both methods and similarities in the mathematical foundations.
+
+Both topics are being actively researched, and more progress in the field of optimal control is yet to be expected.
+
+\section{Content}
+\label{sec:content}
+The following chapter \ref{cha:background} will look at the basics of optimal control problems. The class of model-free and model-based methods and several of their algorithms will be explained in more detail. In chapter \ref{cha:example} a simple, practical example will be solved using stochastic dynamic programming and Q-learning. This will lay out differences in approach and results depending on the method. The outlook on future work and research in this field of study and a discussion on the findings and results of this paper will be stated in the final chapter \ref{cha:discussion}.

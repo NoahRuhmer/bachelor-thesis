@@ -1,0 +1,18 @@
+\usepackage[protrusion=true,factor=900]{microtype}
+\frenchspacing
+\usepackage[sc,osf]{mathpazo} 
+\DeclareRobustCommand{\myacro}[1]{\textsc{\lowercase{#1}}}
+
+\KOMAoption{headsepline}{.4pt}{\color{DispositionColor}}
+\renewcommand{\headfont}{\normalfont\sffamily\color{DispositionColor}}
+\renewcommand{\pnumfont}{\normalfont\sffamily\color{DispositionColor}}
+\addtokomafont{disposition}{\color{DispositionColor}}
+\addtokomafont{caption}{\color{DispositionColor}\footnotesize}
+\addtokomafont{captionlabel}{\color{DispositionColor}}
+
+\usepackage[bottom]{footmisc}
+\usepackage{enumitem}
+\setlist{noitemsep}   %% kills the space between items
+
+\usepackage[babel=true,strict=true,english=american,german=guillemets]{csquotes}
+\linespread{\mylinespread}

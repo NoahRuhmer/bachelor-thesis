@@ -1,0 +1,118 @@
+\chapter{Background}
+\label{cha:background}
+This chapter explains the fundamentals of analyzing the dynamic programming and reinforcement learning approaches. We define a Markov Decision Process to mathematically describe and work with optimization problems.
+
+\section{Markov Decision Processes}
+\label{sec:mdp}
+A Markov Decision Process is essential to describe the system we want to find an optimal control sequence for \cite{bellman1957markovian}. We intend to minimize the cost (Dynamic Programming \ref{sec:dp}) or maximize the reward (Reinforcement Learning \ref{sec:rl}) for our optimization problem.
+
+These problems are discrete-time stochastic control processes meaning that the system changes in discrete steps from one state to the next. Changing from one state $s$ to the next state $s'$ is defined by taking action $a$ in state $s$. There can be multiple valid actions in any given state, and the progression to the next step can also be stochastic. We speak of an infinite horizon problem if there is no limit on the number of successive states for a Markov Decision Process.
+
+Lets define a Markov Decision Process as tuple: $MDP = \{S, A, P, R\}$
+\begin{itemize}
+	\item $S$: a set of states.
+	\item $A$: a set of actions.
+	\item $P(a, s, s')$: the probability of transitioning to state $s'$ when taking action $a$ in state $s$.
+	\item $R(s, s')$: the received reward when transitioning from state $s$ to $s'$.
+\end{itemize}
+The Markov Property describes that a state must represent all relevant information on the system. It states that the future only depends on the current state, and all past states can be disregarded.
+
+A special case of the Markov Decision Process would be a system in which every probability $P(a, s, s') = 1$. In this case, it is called a Deterministic Markov Decision Process as each state transition is entirely deterministic.
+
+We can now use this system model as a basis to find an optimal control policy. This optimized policy takes actions depending on the current state and optimizes the sum of rewards until reaching an end state.
+
+\section{Dynamic Programming}
+\label{sec:dp}
+
+Dynamic programming is a model-based approach associated with recursively splitting a more extensive problem into sub-problems. The sub-problems are solved independently, and their combined solutions give a solution to the whole starting problem \cite{bellman1966dynamic}.
+
+Our goal is to find the optimal policy for a process. If the process has no inert uncertainty in its system, we can progress by using deterministic dynamic programming. Otherwise, we need to account for the uncertainties, which are handled using stochastic dynamic programming \cite{bertsekas2012dynamic}.
+
+Dynamic programming can be used to solve problems with these properties:
+\begin{itemize}
+	\setlength\itemsep{0.5em}
+	\item Known Markov Decision Process:\\
+	A full description of the system model needs to be available.
+	
+	\item Principal of Optimality:\\
+	Splitting the optimal solution into sub-solutions still gives the optimal solutions to the corresponding sub-problems. Therefore the problem can be split into smaller parts, which can be solved independently. This property is also called an optimal substructure. A well-known example is Dijkstra's Shortest Path, as any sub-path of the shortest path between two points is the shortest path between its endpoints.
+	
+	\item Overlapping sub-problems:\\
+	A sub-problem may occur more than once within the overall problem. Dynamic programming considers this, and the sub-problem will only be solved once.
+\end{itemize}
+
+\subsection{Deterministic Dynamic Programming}
+\label{subsec:ddp}
+A deterministic process is a special case of the general Markov Decision Process. All $P(a, s, s') = 1$ and therefore there is only a single transition taking action $a$ in state $s$ leading to a single $s'$. Thus we can simplify the reward function to $R(a,s)$.
+
+Deterministic Bellman equation:
+\begin{equation}
+	\label{eqn:bellman}
+	V(s) = \max_a {R(a, s) + V(s')}
+\end{equation}
+This describes that the value of a state is the sum of the next state value plus the action, which maximizes the reward between the current and next steps.
+
+
+\begin{itemize}
+	\setlength\itemsep{0.5em}
+	\item $V(s)$: is the value function of a given state $s$. The value function describes the expected optimal reward from being in this state.
+	\item $R(a, s)$: the reward received by taking action $a$ in state $s$.
+	\item $s' = t(a,s)$: t defining the deterministic transition function
+\end{itemize}
+
+The value function can then be used to find the optimal policy function $A(s)$. This function gives the optimal action $a^*$ to take when being in state $s$.
+Furthermore, by the requirements from the Markov Decision Process, the starting states value equals this system's optimal reward.
+
+\subsection{Stochastic Dynamic Programming}
+\label{subsec:sdp}
+Dynamic programming can also solve problems with an uncertainty of the next state $s'$ \cite{ross2014introduction}. By extending the equation from \ref{eqn:bellman} we can reach a stochastic value function.
+\begin{equation}
+	\label{eqn:sto_bellman}
+	V(s) = \max_a \bigg(R(a, s) + \sum_{s'} P(a, s, s') V(s')\bigg)
+\end{equation}
+
+\begin{itemize}
+	\setlength\itemsep{0.5em}
+	\item $R(a, s)$: Expected reward by taking action $a$ in state $s$. This is averaged over all possible transitions from $s$ by taking $a$.
+	\item $P(a, s, s')$: Probability of transitioning from state $s$ to $s'$ taking action $a$.
+	\item $|s'|$: Number of reached states $s'$ by taking action $a$ in state $s$. 
+\end{itemize}
+
+\begin{equation*}
+	R(a, s) = \frac{1}{|s'|} \sum_{s'} R(a, s, s') \cdot P(a, s, s')
+\end{equation*}
+
+\section{Reinforcement Learning}
+\label{sec:rl}
+Reinforcement learning is a machine learning approach in which the algorithm learns a policy to maximize the reward of a system \cite{sutton2018reinforcement}. This policy maps the observed environment to an action that interacts with the environment. The observed environment can be seen as the state of the Markov Decision Process. 
+
+A significant advantage of reinforcement learning is that it does not need a complete system model. It is sufficient to know states, actions, and received rewards when being or transitioning into a state.
+This allows reinforcement learning to work without knowing $P(a,s,s')$. It can be seen as approximated dynamic programming \ref{sec:dp} as the policy indirectly learns the model and transition probabilities \cite{bertsekas2019reinforcement}.
+
+\subsection{Q-Learning}
+\label{subsec:ql}
+Q-learning is a model-free reinforcement learning algorithm. It only needs a set of all states, all actions, and the reward of taking an action while in a specific state. However, it does not need to know the probabilities of transitioning from one state to the next. It uses a Q-table which estimates the value of taking an action in a particular state. This Q-table is a matrix containing pairs of all states and actions and depicts the value of taking a particular action in a state. The optimal policy takes the highest valued action from a state in the table \cite{watkins1989learning}.
+
+Q-learning's convergence has been proven, given an unlimited amount of time working on a finite Markov Decision Process \cite{watkins1992q}. This will converge for any initialization of the Q-table.
+
+\subsubsection{Training}
+Training is performed by selecting an action randomly or using the Q-table as the policy to choose the action. We define an exploration rate $\epsilon$, which determines how often we select a random action, instead of using the Q-table policy to determine the action. Taking a random action is called exploration and ensures that the policy does not get stuck on a greedy local maximum but will eventually learn the global optimum.
+
+The chosen action then gets executed, and the Q-table is updated accordingly to the received reward. This process can be repeated until we converge on a Q-table that approximates the optimal policy arbitrarily well, depending on the training time and parameters.
+
+\subsubsection{Update Rule} 
+\begin{equation}
+	Q_{new}(a, s) = Q(a, s) + \alpha \cdot \bigg(R(a, s) + \gamma \cdot \max_a Q(a, s') - Q(a, s)\bigg)
+\end{equation}
+This formula cannot update the final state in this table, so we set the reward of the end state (most often $0$).
+
+\begin{itemize}
+	\setlength\itemsep{0.5em}
+	\item $\alpha$: learning rate ($0 < \alpha \leq 1$)\\
+	This determines how much new runs influence the learned Q-Table entry. It can also be seen as learning speed, but convergence is only guaranteed for a diminishing stepsize. 
+	\item $\gamma$: discount factor ($0 \leq \gamma < 1$)\\
+	It defines the importance of future rewards - foresight of the algorithm.\\
+	Setting it to $0$ will create a greedy policy, only taking the action for the best current reward into account.\\
+	$\gamma$ should not be $1$ as the Q-Table values will diverge otherwise.
+\end{itemize}
+

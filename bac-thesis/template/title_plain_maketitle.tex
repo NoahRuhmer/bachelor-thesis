@@ -1,0 +1,20 @@
+
+%% if myaddcolophon is set to "true", colophon is added:
+\ifthenelse{\boolean{myaddcolophon}}{
+  \lowertitleback{
+    \mycolophon
+  }%% end lowertitleback
+}{}
+
+\title{%%
+~\hfill\includegraphics[width=3cm]{figures/institution}\\[5mm] %% a logo at the upper right corner
+\mytitle}
+
+\subtitle{\mysubject}
+
+\author{\myauthor
+  \thanks{\href{http://LaTeX.TUGraz.at}{http://LaTeX.TUGraz.at}}\\
+    \date{\today}
+}
+
+\maketitle

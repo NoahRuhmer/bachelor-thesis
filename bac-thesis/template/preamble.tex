@@ -1,0 +1,69 @@
+\documentclass[%
+fontsize=\myfontsize,%% size of the main text
+paper=\mypapersize,  %% paper format
+parskip=\myparskip,  %% vertical space between paragraphs (instead of indenting first par-line)
+DIV=calc,            %% calculates a good DIV value for type area; 66 characters/line is great
+headinclude=true,    %% is header part of margin space or part of page content?
+footinclude=false,   %% is footer part of margin space or part of page content?
+open=right,          %% "right" or "left": start new chapter on right or left page
+appendixprefix=true, %% adds appendix prefix; only for book-classes with \backmatter
+bibliography=totoc,  %% adds the bibliography to table of contents (without number)
+draft=\mydraft,      %% if true: included graphics are omitted and black boxes
+                     %%          mark overfull boxes in margin space
+BCOR=\myBCOR,        %% binding correction (depends on how you bind
+                     %% the resulting printout.
+\mylaterality        %% oneside: document is not printed on left and right sides, only right side
+                     %% twoside: document is printed on left and right sides
+]{scrbook}  %% article class of KOMA: "scrartcl", "scrreprt", or "scrbook".
+            %% CAUTION: If documentclass will be changed, *many* other things
+            %%          change as well like heading structure, ...
+% FIXXME: adopting class usage:
+% from scrbook -> scrartcl OR scrreport:
+% - remove appendixprefix from class options
+% - remove \frontmatter \mainmatter \backmatter \appendix from main.tex
+
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage[\mylanguage]{babel}  
+\usepackage{scrlayer-scrpage} 
+\usepackage[backend=biber, %% using "biber" to compile references (instead of "biblatex")
+% style=\mybiblatexstyle, %% see biblatex documentation
+style=alphabetic, %% see biblatex documentation
+dashed=\mybiblatexdashed, %% do *not* replace recurring reference authors with a dash
+backref=\mybiblatexbackref, %% create backlings from references to citations
+natbib=true, %% offering natbib-compatible commands
+hyperref=true, %% using hyperref-package references
+]{biblatex}  %% remove, if using BibTeX instead of biblatex
+
+\addbibresource{\mybiblatexfile} %% remove, if using BibTeX instead of biblatex
+
+\usepackage{ifthen}
+
+\ifthenelse{\boolean{\mydraft}}{   %% the \mydraft switches between
+                                   %% showing rectangles instead of graphics
+  \usepackage[pdftex,draft]{graphicx}
+}
+{
+  \usepackage[pdftex]{graphicx}
+}
+\usepackage{pifont}
+
+%% pre-define ifthen-boolean variables:
+\newboolean{myaddcolophon}
+\newboolean{myaddlistoftodos}
+\newboolean{english_affidavit}
+
+\usepackage{xspace}
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{DispositionColor}{RGB}{\mydispositioncolor}
+\usepackage[normalem]{ulem}
+\usepackage{framed}
+\usepackage{eso-pic}
+\usepackage{enumitem}
+\usepackage[\mytodonotesoptions]{todonotes}  %% option "disable" removes all todonotes output from resulting document
+
+\usepackage{units}

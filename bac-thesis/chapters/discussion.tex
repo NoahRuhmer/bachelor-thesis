@@ -1,0 +1,16 @@
+
+\chapter{Discussion}
+\label{cha:discussion}
+
+In this paper, we discussed the basic theory for optimal control. We listed the requirements and how to define a system to describe the problem accurately. Further, we explained two highly established approaches to solving such a control problem: Dynamic programming and reinforcement learning as respective model-free and model-based methods.
+
+We applied Stochastic Dynamic Programming and Q-Learning to an example and solved the optimal control problem with both methods. Our experimental results align with existing theory and further support that either method is valid in approaching such a problem.
+
+Both methods differ in their advantages and disadvantages. Dynamic programming produces an optimal solution but has high prerequisites. Moreover, the solution on a particular system may not work for a slightly changed model. Model-free reinforcement learning solutions can approximate the solution arbitrarily well. They can also be more general in their solution and therefore applied to model variations. For example, the Q-learning application from the Example \ref{cha:example} works on any given probability distribution $p(i)$. However, the dynamic programming solution can only be applied to a constant $p$.
+
+\section{Future Work}
+\label{sec:future_work}
+
+The methods are still active research fields, and this work can be expanded upon in the future. One open question is the effects of a non-constant probability of parking spaces being free or not. 
+A more general interest would be to apply a hybrid approach by combining dynamic programming with reinforcement learning to cancel out the disadvantages of both methods.
+
